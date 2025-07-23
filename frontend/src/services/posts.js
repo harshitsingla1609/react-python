@@ -1,11 +1,11 @@
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api/posts/';
 
-export async function getPosts(token) {
-  const res = await fetch(API_URL, {
+export async function getPosts(token, { page = 1, search = '' } = {}) {
+  let url = API_URL + `?page=${page}`;
+  if (search) url += `&search=${encodeURIComponent(search)}`;
+  const res = await fetch(url, {
     headers: { 'Authorization': `Bearer ${token}` }
   });
-  console.log(res, 'datadatadata res')
-
   return res.json();
 }
 
